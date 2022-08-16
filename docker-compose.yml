@@ -1,0 +1,35 @@
+version: '3.8'
+services:
+  app:
+    container_name: 'pycharm_torch_1'
+    build:
+      dockerfile: Dockerfile
+    volumes:
+      - .:/app/Github/torch_scBasset
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - capabilities: [ "gpu" ]
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+    ipc: host
+  jupiter:
+    container_name: 'pycharm_torch_Jup_2'
+    build:
+      dockerfile: DockerfileJupyter
+    ports:
+      - "8888:8888"
+    volumes:
+      - .:/app/Github/torch_scBasset
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - capabilities: [ "gpu" ]
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+    ipc: host
+#    ulimit:
+#      memlock=-1
+#      stack=67108864
